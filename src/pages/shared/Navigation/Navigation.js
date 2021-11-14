@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Link, Nav, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 
 
@@ -30,14 +30,16 @@ const Navigation = () => {
                             <Typography variant="h5">Supple Smile</Typography>
                         </NavLink>
                     </Typography>
-                    <NavLink activeClassName="active" to="/home" style={{ textDecoration: 'none' }}>
-                        <Button sx={{ color: 'white' }} >Home</Button>
-                    </NavLink>
-                    <NavLink activeClassName="active" to="/all_lipsticks" style={{ textDecoration: 'none' }}>
-                        <Button sx={{ color: 'white' }} >Explore</Button>
-                    </NavLink>
+                    <Box >
+                        <NavLink activeClassName="active" to="/home" style={{ textDecoration: 'none' }}>
+                            <Button sx={{ color: 'white' }} >Home</Button>
+                        </NavLink>
+                        <NavLink activeClassName="active" to="/all_lipsticks" style={{ textDecoration: 'none' }}>
+                            <Button sx={{ color: 'white' }} >Explore</Button>
+                        </NavLink>
+                    </Box>
                     {user?.email ?
-                        <Box>
+                        <Box >
                             <NavLink activeClassName="active" to="/dashboard" style={{ textDecoration: 'none' }}>
                                 <Button sx={{ color: 'white' }} >Dashboard</Button>
                             </NavLink>

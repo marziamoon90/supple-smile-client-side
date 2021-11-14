@@ -1,4 +1,4 @@
-import { Button, Divider, Grid, Paper, Typography } from '@mui/material';
+import { Divider, Grid, Paper, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
 import ShoppingBasketOutlinedIcon from '@mui/icons-material/ShoppingBasketOutlined';

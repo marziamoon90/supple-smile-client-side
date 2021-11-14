@@ -12,11 +12,11 @@ import Navigation from '../../shared/Navigation/Navigation';
 const BuyLipstick = () => {
     const [buyLipstick, setBuyLipstick] = useState({})
     const { lipstickId } = useParams();
-    const { isLoading, user } = useAuth();
+    const { user } = useAuth();
     const initialInfo = { clientName: user.displayName, email: user.email, phone: '' };
     const [orderInfo, setOrderInfo] = useState(initialInfo);
     const [confirmOrder, setConfirmOrder] = useState(false);
-
+    const [isLoading, setIsLoading] = useState(true);
 
     // on blur 
     const handleOnblur = e => {
@@ -32,6 +32,8 @@ const BuyLipstick = () => {
     const handleOrderSubmit = e => {
         // collect data from order 
         const productName = buyLipstick.name;
+        const productImg = buyLipstick.img;
+        const productPrice = buyLipstick.price;
         // console.log(productName)
         const date = new Date();
         const orderDate = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
@@ -39,7 +41,9 @@ const BuyLipstick = () => {
         const order = {
             ...orderInfo,
             productName,
-            orderDate
+            orderDate,
+            productImg,
+            productPrice
         }
         // console.log(order)
         // send to server 
@@ -67,6 +71,9 @@ const BuyLipstick = () => {
                 setBuyLipstick(myLipstick)
                 // console.log(myLipstick)
             })
+            .finally(() => {
+                setIsLoading(false)
+            })
     }
     useEffect(() => getSingleLipstick(), [])
     return (
@@ -88,6 +95,7 @@ const BuyLipstick = () => {
                                     sx={{ width: "90%", m: 1 }}
                                     id="outlined-basic"
                                     name="email"
+                                    defaultValue={user.email}
                                     onBlur={handleOnblur}
                                     type="email"
                                     label="your email"
@@ -108,6 +116,7 @@ const BuyLipstick = () => {
                                     sx={{ width: "90%", m: 1 }}
                                     id="outlined-basic"
                                     type="text"
+                                    defaultValue={user.displayName}
                                     onBlur={handleOnblur}
                                     name="clientName"
                                     label="your name"

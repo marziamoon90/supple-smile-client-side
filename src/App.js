@@ -3,7 +3,7 @@ import './App.css';
 import AuthProvider from './contexts/AuthProvider/AuthProvider';
 import AllLipsticks from './pages/AllLipsticks/AllLipsticks/AllLipsticks';
 import BuyLipstick from './pages/AllLipsticks/BuyLipstick/BuyLipstick';
-import Dashboard from './pages/Dashboard/Dashboard';
+import Dashboard from './pages/Dashboard/Dashboard/Dashboard';
 import Home from './pages/Home/Home/Home';
 import Login from './pages/Login/Login/Login';
 import PrivateRoute from './pages/Login/PrivateRoute/PrivateRoute';

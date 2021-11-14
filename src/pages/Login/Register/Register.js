@@ -6,13 +6,13 @@ import Alert from '@mui/material/Alert';
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import icon from '../../../images/icon.png';
+import { useLocation, useHistory } from 'react-router';
 import useAuth from '../../hooks/useAuth';
 import googleIcon from '../../../images/googleIcon.png'
 
 // background image 
 const bg = {
     background: `url(${'https://cdn.shopify.com/s/files/1/2644/9976/files/img12_0fec216f-46f5-463e-9aad-fc4ced4d0048.jpg?v=1516174060'})`,
-    // backgroundAttachment: 'fixed',
     backgroundSize: 'cover',
     width: 700,
     height: 700,
@@ -28,13 +28,17 @@ const googleButton = {
 }
 const Register = () => {
     const [loginData, setLoginData] = useState({});
-    const { user, registerUser, signInUsingGoogle, isLoading, authError } = useAuth()
+    const { user, registerUser, signInUsingGoogle, isLoading, authError } = useAuth();
+    // const location = useLocation()
+    const history = useHistory()
+    // const redirect_uri = location.state?.from || '/home';
 
     const handleOnBlur = e => {
         const field = e.target.name;
         const value = e.target.value;
         const newLoginData = { ...loginData };
         newLoginData[field] = value;
+        // console.log(newLoginData)
         setLoginData(newLoginData);
     }
     const handleOnsubmitRegister = e => {
@@ -71,6 +75,15 @@ const Register = () => {
                         isLoading ? <LinearProgress color="secondary" />
                             :
                             <form onSubmit={handleOnsubmitRegister}>
+                                <TextField
+                                    sx={{ width: '75%', m: 1, }}
+                                    required
+                                    id="outlined-basic"
+                                    name="name"
+                                    onBlur={handleOnBlur}
+                                    label="your name"
+                                    variant="outlined"
+                                />
                                 <TextField
                                     sx={{ width: '75%', m: 1, }}
                                     required

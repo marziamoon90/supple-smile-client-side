@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import useLipsticks from '../../hooks/useLipsticks';
 import MyHomeLipsticks from './MyHomeLipsticks';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import useAuth from '../../hooks/useAuth';
+
 
 
 const baground = {
@@ -20,8 +20,7 @@ const baground = {
     backgroundBlendMode: 'darken, luminosity'
 }
 const HomeLipsticks = () => {
-    const [lipsticks] = useLipsticks();
-    const { isLoading } = useAuth()
+    const [lipsticks, isLoading] = useLipsticks();
     const slicedLipsticks = lipsticks.slice(0, 6);
     // console.log(slicedLipsticks)
     return (
@@ -35,8 +34,8 @@ const HomeLipsticks = () => {
                             <Button sx={{ backgroundColor: 'maroon', color: 'white', borderRadius: '0', fontWeight: 'bold' }}> <ArrowForwardIcon /> Read More</Button></Link>
                     </Box>
                 </Grid>
-                <Grid item xs={12} md={9}>
-                    {isLoading ? <LinearProgress color="secondary" /> :
+                {isLoading ? <LinearProgress color="secondary" /> :
+                    <Grid item xs={12} md={9}>
                         <Grid container spacing={2}>
                             {
                                 slicedLipsticks.map(myLipstick => <MyHomeLipsticks
@@ -44,8 +43,9 @@ const HomeLipsticks = () => {
                                     myLipstick={myLipstick}
                                 ></MyHomeLipsticks>)
                             }
-                        </Grid>}
-                </Grid>
+                        </Grid>
+                    </Grid>
+                }
             </Grid>
         </>
     );
