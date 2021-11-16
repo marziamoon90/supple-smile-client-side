@@ -10,10 +10,12 @@ const MyHomeLipsticks = ({ myLipstick }) => {
         <Grid item xs={12} md={6}>
             <Paper elevation={0} >
                 <Box sx={{ display: 'flex' }}>
-                    <img style={{ overflow: 'hidden' }} width="40%" height="180px" src={img} alt="" />
+                    <Box style={{ width: "40%", overflow: 'hidden' }}>
+                        <img style={{ overflow: 'hidden' }} width="180px" height="180px" src={img} alt="" />
+                    </Box>
                     <Box width="60%">
-                        <Typography variant="h6" sx={{ p: 1, textTransform: 'capitalize' }}>{name}</Typography>
-                        <Typography sx={{ p: 1 }}>{brand}</Typography>
+                        <Typography variant="h6" sx={{ p: 1, textTransform: 'capitalize', ml: 1 }}>{name}</Typography>
+                        <Typography sx={{ p: 1, ml: 1 }}>{brand}</Typography>
                         <Divider />
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
                             <Typography variant="h5" sx={{ ml: 1, color: 'warning.main' }}>${price}
