@@ -24,28 +24,28 @@ const HomeLipsticks = () => {
     const slicedLipsticks = lipsticks.slice(0, 6);
     // console.log(slicedLipsticks)
     return (
-        <>
+        <> <h1 style={{ textAlign: 'center', color: 'goldenrod' }}>For Any Occasion</h1>
             <Grid container spacing={2} sx={{ mt: 5 }}>
                 <Grid item xs={12} md={3}>
                     <Box style={baground} sx={{ textAlign: 'end', color: 'white' }}>
                         <Typography variant="h5" sx={{ color: 'warning.main' }}>Enter to win now</Typography>
                         <Typography variant="h3">Great Big Giveaway</Typography>
                         <Link to="/all_lipsticks" style={{ textDecoration: 'none' }}>
-                            <Button sx={{ backgroundColor: 'maroon', color: 'white', borderRadius: '0', fontWeight: 'bold' }}> <ArrowForwardIcon /> Read More</Button></Link>
+                            <Button sx={{ backgroundColor: 'maroon', color: 'white', borderRadius: '0', fontWeight: 'bold' }}> <ArrowForwardIcon /> Explore</Button></Link>
                     </Box>
                 </Grid>
-                {isLoading ? <LinearProgress color="secondary" /> :
-                    <Grid item xs={12} md={9}>
-                        <Grid container spacing={2}>
-                            {
-                                slicedLipsticks.map(myLipstick => <MyHomeLipsticks
-                                    key={myLipstick._id}
-                                    myLipstick={myLipstick}
-                                ></MyHomeLipsticks>)
-                            }
-                        </Grid>
+                {isLoading && <LinearProgress color="secondary" />}
+                <Grid item xs={12} md={9}>
+                    <Grid container spacing={2}>
+                        {
+                            slicedLipsticks.map(myLipstick => <MyHomeLipsticks
+                                key={myLipstick._id}
+                                myLipstick={myLipstick}
+                            ></MyHomeLipsticks>)
+                        }
                     </Grid>
-                }
+                </Grid>
+
             </Grid>
         </>
     );

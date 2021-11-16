@@ -1,20 +1,56 @@
-import { LinearProgress } from '@mui/material';
-import React from 'react';
-import useAuth from '../../hooks/useAuth';
+import { Container, Grid, LinearProgress } from '@mui/material';
+import { Box } from '@mui/system';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import DisplayReview from '../../Dashboard/Review/DisplayReview';
+import Footer from '../../shared/Footer/Footer';
 import Navigation from '../../shared/Navigation/Navigation';
 
 
 import Banner from '../Banner/Banner';
+import ExtraSection from '../ExtraSection/ExtraSection';
 import HomeLipsticks from '../HomeLipsticks/HomeLipsticks';
 
 const Home = () => {
-    const { isLoading } = useAuth()
+    const [reviewLoading, setReviewLoading] = useState(true)
+    const [review, setReview] = useState([])
+
+    useEffect(() => {
+        axios.get(`https://nameless-citadel-84200.herokuapp.com/review`)
+            .then(res => {
+                const allReview = res.data;
+                setReview(allReview)
+                // console.log(manageOrders)
+            })
+            .finally(() => {
+                setReviewLoading(false)
+            })
+    }, []);
+
     return (
         <div>
-            <Navigation></Navigation>
-            <Banner></Banner>
-            {isLoading ? <LinearProgress color="secondary" /> :
-                <HomeLipsticks></HomeLipsticks>}
+            <div style={{ minHeight: '95vh', marginBottom: '80px' }}>
+                <Navigation></Navigation>
+                <Banner></Banner>
+                {reviewLoading ? <LinearProgress color="secondary" /> :
+                    <Box>
+                        <HomeLipsticks></HomeLipsticks>
+                        <Container sx={{ my: 8 }}>
+                            <h1 style={{ textAlign: 'center', color: 'goldenrod' }}>What's our client says?</h1>
+                            <Grid container spacing={5} sx={{ my: 2 }}>
+                                {
+                                    review.map(displayReview => <DisplayReview
+                                        key={displayReview._id}
+                                        displayReview={displayReview}
+                                    ></DisplayReview>)
+                                }
+                            </Grid>
+                        </Container>
+                    </Box>
+                }
+                <ExtraSection></ExtraSection>
+            </div>
+            <Footer></Footer>
         </div>
     );
 };

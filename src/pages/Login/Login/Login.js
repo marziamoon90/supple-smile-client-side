@@ -9,6 +9,7 @@ import icon from '../../../images/icon.png';
 import { Box } from '@mui/system';
 import useAuth from '../../hooks/useAuth';
 import googleIcon from '../../../images/googleIcon.png'
+import Footer from '../../shared/Footer/Footer';
 
 const bg = {
     background: `url(${'https://cdn.shopify.com/s/files/1/2644/9976/files/img12_0fec216f-46f5-463e-9aad-fc4ced4d0048.jpg?v=1516174060'})`,
@@ -29,13 +30,10 @@ const Login = () => {
     const [loginData, setLoginData] = useState({});
     const location = useLocation()
     const history = useHistory()
-    const redirect_uri = location.state?.from || '/home';
+
 
     const handleGoogleSignIn = () => {
-        signInUsingGoogle()
-            .then(result => {
-                history.push(redirect_uri)
-            })
+        signInUsingGoogle(location, history)
     }
 
     const handleOnBlur = e => {
@@ -46,83 +44,91 @@ const Login = () => {
         setLoginData(newLoginData);
     }
     const handleLoginSubmit = e => {
-        loginUser(loginData.email, loginData.password);
-
+        loginUser(loginData.email, loginData.password, location, history);
         e.preventDefault();
     }
     return (
-        <Container sx={{ mt: 8 }} >
-            <Grid container spacing={2}>
-                {/* login form  */}
-                <Grid item xs={12} md={5} >
-                    <Box sx={{ display: 'flex', alignItems: 'center', }}>
-                        <img width="20%" height="20%" src={icon} alt="" />
-                        <Typography variant="h4" sx={{ color: 'maroon', fontWeight: 'light', my: 5 }}>
-                            Supple Smile</Typography>
-                    </Box>
+        <div >
+            <Container sx={{ mt: 8 }} >
+                <Grid container spacing={2}>
+                    {/* login form  */}
+                    <Grid item xs={12} md={5} >
+                        <Box sx={{ display: 'flex', alignItems: 'center', }}>
+                            <img width="20%" height="20%" src={icon} alt="" />
+                            <Typography variant="h4" sx={{ color: 'maroon', fontWeight: 'light', my: 5 }}>
+                                Supple Smile</Typography>
+                        </Box>
 
-                    <Typography variant="h4" sx={{ fontWeight: 'bold' }}>Log in to your account</Typography>
-                    {/* Continue with google  */}
-                    <Button onClick={handleGoogleSignIn} style={googleButton} sx={{ width: '75%', m: 1, color: 'white' }}>
-                        <img style={{ marginRight: "20px" }} width="30px" src={googleIcon} alt="" />
-                        Continue with google</Button>
-                    <div><img width="75%" src={divider} alt="" /></div>
-                    {user?.email && <Alert severity="success">User Created Successfully!</Alert>}
-                    {
-                        isLoading ? <LinearProgress color="secondary" />
-                            :
-                            <>
-                                <form onSubmit={handleLoginSubmit}>
-                                    <TextField
-                                        sx={{ width: '75%', m: 1, }}
-                                        id="outlined-basic"
-                                        name="email"
-                                        onBlur={handleOnBlur}
-                                        label="your email"
-                                        variant="outlined"
-                                    />
-                                    <TextField
-                                        sx={{ width: '75%', m: 1, }}
-                                        id="outlined-basic"
-                                        name="password"
-                                        type="password"
-                                        onBlur={handleOnBlur}
-                                        label="your password"
-                                        variant="outlined"
-                                    />
-                                    <Button
-                                        sx={{ width: '75%', m: 1, backgroundColor: 'maroon', color: 'white' }}
-                                        type="submit"
-                                        variant="contained"
-                                    >Login</Button>
-                                </form>
-                                <NavLink to="/register">
-                                    <Button
-                                        sx={{ width: '75%', m: 1, color: 'maroon' }}
-                                        type="submit"
-                                    // variant="contained"
-                                    >new user? Create an account</Button>
-                                </NavLink>
-                            </>
-                    }
-                </Grid>
+                        <Typography variant="h4" sx={{ fontWeight: 'bold' }}>Log in to your account</Typography>
+                        {/* Continue with google  */}
+                        <Button onClick={handleGoogleSignIn} style={googleButton} sx={{ width: '75%', m: 1, color: 'white' }}>
+                            <img style={{ marginRight: "20px" }} width="30px" src={googleIcon} alt="" />
+                            Continue with google</Button>
+                        <div><img width="75%" src={divider} alt="" /></div>
+                        {user?.email && <Alert severity="success">User Created Successfully!</Alert>}
+                        {
+                            isLoading ? <LinearProgress color="secondary" />
+                                :
+                                <>
+                                    <form onSubmit={handleLoginSubmit}>
+                                        <TextField
+                                            sx={{ width: '75%', m: 1, }}
+                                            id="outlined-basic"
+                                            name="email"
+                                            onBlur={handleOnBlur}
+                                            label="your email"
+                                            variant="outlined"
+                                        />
+                                        <TextField
+                                            sx={{ width: '75%', m: 1, }}
+                                            id="outlined-basic"
+                                            name="password"
+                                            type="password"
+                                            onBlur={handleOnBlur}
+                                            label="your password"
+                                            variant="outlined"
+                                        />
+                                        <Button
+                                            sx={{ width: '75%', m: 1, backgroundColor: 'maroon', color: 'white' }}
+                                            type="submit"
+                                            variant="contained"
+                                        >Login</Button>
+                                    </form>
+                                    <NavLink to="/register">
+                                        <Button
+                                            sx={{ width: '75%', m: 1, color: 'maroon' }}
+                                            type="submit"
+                                        // variant="contained"
+                                        >new user?Create an account</Button>
+                                    </NavLink>
+                                    <NavLink to="/" style={{ textDecoration: 'none' }}>
+                                        <Button
+                                            sx={{ width: '75%', m: 1, backgroundColor: 'maroon', color: 'white' }}
+                                            variant="contained"
+                                        >Back to home</Button>
+                                    </NavLink>
+                                </>
+                        }
+                    </Grid>
 
-                {/* login page image  */}
-                <Grid item md={7} className="login-img" style={bg}>
-                    <Typography variant="h5" sx={{ color: 'warning.main' }}>
-                        Exclusive Reds Collection
-                    </Typography>
-                    <Typography variant="h2" sx={{ color: 'white' }}>
-                        Mini Matte Twilight Colors
-                    </Typography>
-                    <Typography paragraph width="50%" sx={{ color: 'white' }}>
-                        In commodo dolor vitae sem vulputate pellentesque. Aliquam sit amet mattis Proin sed nulla mi. Curabitur commodo lectus sit amet leo dignissim.
-                    </Typography>
-                    <Link to="/home" style={{ textDecoration: 'none' }}>
-                        <Button sx={{ backgroundColor: 'white', color: 'maroon', borderRadius: '0', fontWeight: 'bold' }}> <ArrowForwardIcon /> Shop Now</Button></Link>
+                    {/* login page image  */}
+                    <Grid item md={7} className="login-img" style={bg}>
+                        <Typography variant="h5" sx={{ color: 'warning.main' }}>
+                            Exclusive Reds Collection
+                        </Typography>
+                        <Typography variant="h2" sx={{ color: 'white' }}>
+                            Mini Matte Twilight Colors
+                        </Typography>
+                        <Typography paragraph width="50%" sx={{ color: 'white' }}>
+                            In commodo dolor vitae sem vulputate pellentesque.Aliquam sit amet mattis Proin sed nulla mi.Curabitur commodo lectus sit amet leo dignissim.
+                        </Typography>
+                        <Link to="/home" style={{ textDecoration: 'none' }}>
+                            <Button sx={{ backgroundColor: 'white', color: 'maroon', borderRadius: '0', fontWeight: 'bold' }}> <ArrowForwardIcon /> Shop Now</Button></Link>
+                    </Grid>
                 </Grid>
-            </Grid>
-        </Container>
+            </Container >
+            <Footer></Footer>
+        </div>
     );
 };
 

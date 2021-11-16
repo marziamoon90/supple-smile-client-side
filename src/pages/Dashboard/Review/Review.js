@@ -8,7 +8,6 @@ import useAuth from '../../hooks/useAuth';
 const Review = () => {
     // const [value, setValue] = React.useState(0);
     const { user } = useAuth()
-    console.log(user)
     const initialInfo = { email: user.email, name: user.displayName };
     const [review, setReview] = useState(initialInfo)
 
@@ -21,10 +20,26 @@ const Review = () => {
         console.log(newReviewData)
     }
     const handleSubmitReview = e => {
-        alert('Thanks for your review');
+        // send to server 
+        fetch('https://nameless-citadel-84200.herokuapp.com/review', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(review)
+        })
+            .then(res => res.json())
+            .then(data => {
+                // console.log(data)
+                if (data.insertedId) {
+                    alert("thanks for your review")
+                }
+            })
+        e.preventDefault();
         e.target.reset()
         e.preventDefault()
     }
+
     return (
         <Container>
             <h1>What Say?</h1>
@@ -38,7 +53,6 @@ const Review = () => {
                     placeholder="Please say something"
                     style={{ width: '90%', height: '150px' }}
                 />
-
                 <Box
                     sx={{
                         '& > legend': { mt: 2 },

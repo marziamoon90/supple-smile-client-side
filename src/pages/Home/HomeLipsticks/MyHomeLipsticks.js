@@ -12,11 +12,11 @@ const MyHomeLipsticks = ({ myLipstick }) => {
                 <Box sx={{ display: 'flex' }}>
                     <img width="180px" height="180px" src={img} alt="" />
                     <Box width="280px">
-                        <Typography variant="h6" sx={{ p: 1, textTransform: 'lowercase' }}>{name}</Typography>
+                        <Typography variant="h6" sx={{ p: 1, textTransform: 'capitalize' }}>{name}</Typography>
                         <Typography sx={{ p: 1 }}>{brand}</Typography>
                         <Divider />
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3, width: '100%' }}>
-                            <Typography variant="h5" sx={{ color: 'warning.main' }}>${price}
+                            <Typography variant="h5" sx={{ ml: 1, color: 'warning.main' }}>${price}
                             </Typography>
                             <Link to={`/lipsticks/${_id}`}><ShoppingBasketOutlinedIcon
                                 sx={{ backgroundColor: 'maroon', color: 'white', border: 1, p: 1, borderRadius: '50%' }}

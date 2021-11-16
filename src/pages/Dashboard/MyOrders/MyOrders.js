@@ -1,3 +1,4 @@
+import { Container } from '@material-ui/core';
 import { Grid, LinearProgress } from '@mui/material';
 import { Box } from '@mui/system';
 import axios from 'axios';
@@ -43,22 +44,26 @@ const MyOrders = () => {
 
     return (
         <div>
-            <Box>
-                <h1>My all orders </h1>
+            <Container>
+                <h1>My all orders</h1>
                 {isLoading ? <LinearProgress color="secondary" />
                     :
-                    <Grid container spacing={2}>
-                        {
-                            myOrders.map(order => <Order
-                                key={order._id}
-                                order={order}
-                                setMyOrders={setMyOrders}
-                                handleDeleteOrder={handleDeleteOrder}
-                            ></Order>)
-                        }
-                    </Grid>
+                    <Box>
+                        {myOrders.length ?
+                            <Grid container spacing={2}>
+                                {
+                                    myOrders.map(order => <Order
+                                        key={order._id}
+                                        order={order}
+                                        setMyOrders={setMyOrders}
+                                        handleDeleteOrder={handleDeleteOrder}
+                                    ></Order>)
+                                }
+                            </Grid> :
+                            <Box sx={{ color: 'goldenrod' }}> <h1>You didn't order any product</h1> </Box>}
+                    </Box>
                 }
-            </Box>
+            </Container>
         </div>
     );
 };

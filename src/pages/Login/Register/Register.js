@@ -6,9 +6,10 @@ import Alert from '@mui/material/Alert';
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import icon from '../../../images/icon.png';
-import { useLocation, useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import useAuth from '../../hooks/useAuth';
 import googleIcon from '../../../images/googleIcon.png'
+import Footer from '../../shared/Footer/Footer';
 
 // background image 
 const bg = {
@@ -28,10 +29,14 @@ const googleButton = {
 }
 const Register = () => {
     const [loginData, setLoginData] = useState({});
-    const { user, registerUser, signInUsingGoogle, isLoading, authError } = useAuth();
-    // const location = useLocation()
+    const { registerUser, signInUsingGoogle, isLoading, authError } = useAuth();
     const history = useHistory()
-    // const redirect_uri = location.state?.from || '/home';
+    const location = useLocation();
+
+
+    const handleGoogleSignIn = () => {
+        signInUsingGoogle(location, history)
+    }
 
     const handleOnBlur = e => {
         const field = e.target.name;
@@ -46,103 +51,112 @@ const Register = () => {
             alert('Your password did not match');
             return
         }
-        registerUser(loginData.email, loginData.password);
+        registerUser(loginData.email, loginData.password, loginData.name, history);
         e.preventDefault();
     }
     return (
-        <Container sx={{ mt: 8 }}>
-            <Grid container spacing={2}>
-                <Grid item xs={12} md={5} >
-                    <Box sx={{ display: 'flex', alignItems: 'center', }}>
-                        <img width="20%" height="20%" src={icon} alt="" />
-                        <Typography variant="h4" sx={{ color: 'maroon', fontWeight: 'light', my: 5 }}>
-                            Supple Smile</Typography>
-                    </Box>
+        <div>
+            <Container sx={{ mt: 8 }} >
+                <Grid container spacing={2}>
+                    <Grid item xs={12} md={5} >
+                        <Box sx={{ display: 'flex', alignItems: 'center', }}>
+                            <img width="20%" height="20%" src={icon} alt="" />
+                            <Typography variant="h4" sx={{ color: 'maroon', fontWeight: 'light', my: 5 }}>
+                                Supple Smile</Typography>
+                        </Box>
 
-                    <Typography variant="h4" sx={{ fontWeight: 'bold' }}>Create your account</Typography>
-                    {/* Continue with google  */}
-                    <Button onClick={signInUsingGoogle} style={googleButton} sx={{ width: '75%', m: 1, color: 'white' }}>
-                        <img style={{ marginRight: "20px" }} width="30px" src={googleIcon} alt="" />
-                        Continue with google</Button>
-                    <div><img width="75%" src={divider} alt="" /></div>
+                        <Typography variant="h4" sx={{ fontWeight: 'bold' }}>Create your account</Typography>
+                        {/* Continue with google  */}
+                        <Button onClick={handleGoogleSignIn} style={googleButton} sx={{ width: '75%', m: 1, color: 'white' }}>
+                            <img style={{ marginRight: "20px" }} width="30px" src={googleIcon} alt="" />
+                            Continue with google</Button>
+                        <div><img width="75%" src={divider} alt="" /></div>
 
-                    {user?.email && <Alert severity="success">User Created Successfully!</Alert>}
-                    {
-                        authError && <Alert severity="error">{authError}</Alert>
-                    }
+                        {/* {user?.email && <Alert severity="success">User Created Successfully!</Alert>} */}
+                        {
+                            authError && <Alert severity="error">{authError}</Alert>
+                        }
 
-                    {
-                        isLoading ? <LinearProgress color="secondary" />
-                            :
-                            <form onSubmit={handleOnsubmitRegister}>
-                                <TextField
-                                    sx={{ width: '75%', m: 1, }}
-                                    required
-                                    id="outlined-basic"
-                                    name="name"
-                                    onBlur={handleOnBlur}
-                                    label="your name"
-                                    variant="outlined"
-                                />
-                                <TextField
-                                    sx={{ width: '75%', m: 1, }}
-                                    required
-                                    id="outlined-basic"
-                                    name="email"
-                                    onBlur={handleOnBlur}
-                                    label="your email"
-                                    variant="outlined"
-                                />
-                                <TextField
-                                    sx={{ width: '75%', m: 1, }}
-                                    id="outlined-basic"
-                                    name="password"
-                                    type="password"
-                                    onBlur={handleOnBlur}
-                                    label="your password"
-                                    variant="outlined"
-                                />
-                                <TextField
-                                    sx={{ width: '75%', m: 1, }}
-                                    id="outlined-basic"
-                                    name="password2"
-                                    type="password"
-                                    onBlur={handleOnBlur}
-                                    label="Re-type password"
-                                    variant="outlined"
-                                />
-                                <Button
-                                    sx={{ width: '75%', m: 1, backgroundColor: 'maroon', color: 'white' }}
-                                    type="submit"
-                                    variant="contained"
-                                >Register</Button>
-                            </form>
-                    }
-                    <NavLink to="/login">
-                        <Button
-                            sx={{ width: '75%', m: 1, color: 'maroon' }}
-                            type="submit"
-                            variant="text"
-                        >Already have an account? Please login</Button>
-                    </NavLink>
+                        {
+                            isLoading ? <LinearProgress color="secondary" />
+                                :
+                                <form onSubmit={handleOnsubmitRegister}>
+                                    <TextField
+                                        sx={{ width: '75%', m: 1, }}
+                                        required
+                                        id="outlined-basic"
+                                        name="name"
+                                        onBlur={handleOnBlur}
+                                        label="your name"
+                                        variant="outlined"
+                                    />
+                                    <TextField
+                                        sx={{ width: '75%', m: 1, }}
+                                        required
+                                        id="outlined-basic"
+                                        name="email"
+                                        onBlur={handleOnBlur}
+                                        label="your email"
+                                        variant="outlined"
+                                    />
+                                    <TextField
+                                        sx={{ width: '75%', m: 1, }}
+                                        id="outlined-basic"
+                                        name="password"
+                                        type="password"
+                                        onBlur={handleOnBlur}
+                                        label="your password"
+                                        variant="outlined"
+                                    />
+                                    <TextField
+                                        sx={{ width: '75%', m: 1, }}
+                                        id="outlined-basic"
+                                        name="password2"
+                                        type="password"
+                                        onBlur={handleOnBlur}
+                                        label="Re-type password"
+                                        variant="outlined"
+                                    />
+                                    <Button
+                                        sx={{ width: '75%', m: 1, backgroundColor: 'maroon', color: 'white' }}
+                                        type="submit"
+                                        variant="contained"
+                                    >Register</Button>
+                                </form>
+                        }
+                        <NavLink to="/login">
+                            <Button
+                                sx={{ width: '75%', m: 1, color: 'maroon' }}
+                                type="submit"
+                                variant="text"
+                            >Already have an account? Please login</Button>
+                        </NavLink>
+                        <NavLink to="/" style={{ textDecoration: 'none' }}>
+                            <Button
+                                sx={{ width: '75%', m: 1, backgroundColor: 'maroon', color: 'white' }}
+                                variant="contained"
+                            >Back to home</Button>
+                        </NavLink>
+                    </Grid>
+
+                    {/* login page image  */}
+                    <Grid item md={7} className="login-img" style={bg}>
+                        <Typography variant="h5" sx={{ color: 'warning.main' }}>
+                            Exclusive Reds Collection
+                        </Typography>
+                        <Typography variant="h2" sx={{ color: 'white' }}>
+                            Mini Matte Twilight Colors
+                        </Typography>
+                        <Typography paragraph width="50%" sx={{ color: 'white' }}>
+                            In commodo dolor vitae sem vulputate pellentesque. Aliquam sit amet mattis Proin sed nulla mi. Curabitur commodo lectus sit amet leo dignissim.
+                        </Typography>
+                        <Link to="/home" style={{ textDecoration: 'none' }}>
+                            <Button sx={{ backgroundColor: 'white', color: 'maroon', borderRadius: '0', fontWeight: 'bold' }}> <ArrowForwardIcon /> Shop Now</Button></Link>
+                    </Grid>
                 </Grid>
-
-                {/* login page image  */}
-                <Grid item md={7} className="login-img" style={bg}>
-                    <Typography variant="h5" sx={{ color: 'warning.main' }}>
-                        Exclusive Reds Collection
-                    </Typography>
-                    <Typography variant="h2" sx={{ color: 'white' }}>
-                        Mini Matte Twilight Colors
-                    </Typography>
-                    <Typography paragraph width="50%" sx={{ color: 'white' }}>
-                        In commodo dolor vitae sem vulputate pellentesque. Aliquam sit amet mattis Proin sed nulla mi. Curabitur commodo lectus sit amet leo dignissim.
-                    </Typography>
-                    <Link to="/home" style={{ textDecoration: 'none' }}>
-                        <Button sx={{ backgroundColor: 'white', color: 'maroon', borderRadius: '0', fontWeight: 'bold' }}> <ArrowForwardIcon /> Shop Now</Button></Link>
-                </Grid>
-            </Grid>
-        </Container>
+            </Container>
+            <Footer></Footer>
+        </div>
     );
 };
 

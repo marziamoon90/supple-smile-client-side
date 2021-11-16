@@ -1,5 +1,5 @@
+import { Container } from '@material-ui/core';
 import { Grid, LinearProgress } from '@mui/material';
-import { Box } from '@mui/system';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Order from './Order';
@@ -12,7 +12,7 @@ const ManageAllOrders = () => {
             .then(res => {
                 const manageOrders = res.data;
                 setManageAllOrders(manageOrders)
-                console.log(manageOrders)
+                // console.log(manageOrders)
             })
             .finally(() => {
                 setIsLoading(false)
@@ -39,11 +39,11 @@ const ManageAllOrders = () => {
     }
 
     return (
-        <div>
+        <div style={{ marginBottom: "50px" }}>
             {isLoading ? <LinearProgress color="secondary" />
                 :
-                <Box>
-                    <h2>Manage all orders</h2>
+                <Container>
+                    <h1 style={{ textAlign: 'center', color: 'goldenrod' }}>Manage all orders</h1>
                     <Grid container spacing={2}>
                         {
                             manageAllOrders.map(order => <Order
@@ -53,7 +53,7 @@ const ManageAllOrders = () => {
                             ></Order>)
                         }
                     </Grid>
-                </Box>
+                </Container>
             }
         </div >
     );
