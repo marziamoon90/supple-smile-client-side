@@ -10,7 +10,7 @@ const MyHomeLipsticks = ({ myLipstick }) => {
         <Grid item xs={12} md={6}>
             <Paper elevation={0} >
                 <Box sx={{ display: 'flex' }}>
-                    <img width="180px" height="180px" src={img} alt="" />
+                    <img width="250px" height="180px" src={img} alt="" />
                     <Box width="280px">
                         <Typography variant="h6" sx={{ p: 1, textTransform: 'capitalize' }}>{name}</Typography>
                         <Typography sx={{ p: 1 }}>{brand}</Typography>
