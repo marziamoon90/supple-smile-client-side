@@ -10,16 +10,16 @@ const MyHomeLipsticks = ({ myLipstick }) => {
         <Grid item xs={12} md={6}>
             <Paper elevation={0} >
                 <Box sx={{ display: 'flex' }}>
-                    <img width="250px" height="180px" src={img} alt="" />
-                    <Box width="280px">
+                    <img style={{ overflow: 'hidden' }} width="40%" height="180px" src={img} alt="" />
+                    <Box width="60%">
                         <Typography variant="h6" sx={{ p: 1, textTransform: 'capitalize' }}>{name}</Typography>
                         <Typography sx={{ p: 1 }}>{brand}</Typography>
                         <Divider />
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3, width: '100%' }}>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
                             <Typography variant="h5" sx={{ ml: 1, color: 'warning.main' }}>${price}
                             </Typography>
                             <Link to={`/lipsticks/${_id}`}><ShoppingBasketOutlinedIcon
-                                sx={{ backgroundColor: 'maroon', color: 'white', border: 1, p: 1, borderRadius: '50%' }}
+                                sx={{ backgroundColor: 'maroon', color: 'white', border: 1, p: 1, borderRadius: '50%', mr: 1 }}
                             /></Link>
                         </Box>
                     </Box>
